@@ -79,6 +79,8 @@ add_config_line no-tlsv1_1
 add_config_line no-stdout-log
 add_config_line log-file stdout
 
+add_config_line fingerprint
+
 if [ $ANONYMOUS -eq 0 ]; then
 	turnadmin -a -u $USERNAME -p $PASSWORD -r $REALM
 fi
