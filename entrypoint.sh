@@ -85,6 +85,8 @@ if [ $ANONYMOUS -eq 0 ]; then
 	turnadmin -a -u $USERNAME -p $PASSWORD -r $REALM
 fi
 
+cat "$CONFIG_FILE"
+
 echo "Starting TURN server..."
 
 turnserver
