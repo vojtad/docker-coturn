@@ -1,16 +1,25 @@
 FROM buildpack-deps:18.04
-LABEL maintainer="Nazar Mokrynskyi <nazar@mokrynskyi.com>"
+LABEL maintainer="Vojta Drbohlav <vojta.d@gmail.com>"
 
 EXPOSE 3478/tcp
 EXPOSE 3478/udp
+EXPOSE 5349/tcp
+EXPOSE 5349/udp
 
 ENV ANONYMOUS=0
 ENV USERNAME=username
 ENV PASSWORD=password
+
 ENV REALM=realm
-ENV LISTEN_PORT=3478
-ENV TLS_LISTEN_PORT=5349
-ENV MIN_PORT=65435
+
+ENV LISTENING_PORT=3478
+ENV TLS_LISTENING_PORT=5349
+
+ENV LISTENING_IPS
+ENV RELAY_IPS
+ENV EXTERNAL_IPS
+
+ENV MIN_PORT=49152
 ENV MAX_PORT=65535
 
 RUN \
@@ -20,6 +29,8 @@ RUN \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/*
 
-ADD entrypoint.sh /
+WORKDIR /app
 
-ENTRYPOINT ["/entrypoint.sh"]
+ADD entrypoint.sh .
+
+ENTRYPOINT ["/app/entrypoint.sh"]
