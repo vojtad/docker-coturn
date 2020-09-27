@@ -61,6 +61,10 @@ for ip in $EXTERNAL_IPS; do
 	add_config_line external-ip $ip
 done
 
+if [ "$VERBOSE" == "1" ]; then
+    add_config_line verbose
+fi
+
 add_config_line min-port $MIN_PORT
 add_config_line max-port $MAX_PORT
 
