@@ -47,7 +47,7 @@ add_config_line() {
 rm -f "$CONFIG_FILE"
 
 add_config_line listening-port $LISTENING_PORT
-add_config_line tls-listening-port $LISTENING_PORT
+add_config_line tls-listening-port $TLS_LISTENING_PORT
 
 for ip in $LISTENING_IPS; do
 	add_config_line listening-ip $ip
