@@ -3,15 +3,6 @@ set -e
 
 CONFIG_FILE=/etc/turnserver.conf
 
-if [ $ANONYMOUS -eq 0 ]; then
-	USE_CREDENTIALS='lt-cred-mech'
-	echo "USERNAME: $USERNAME"
-	echo "PASSWORD: $PASSWORD"
-else
-	USE_CREDENTIALS='no-auth'
-	echo "Accepting anonymous requests"
-fi
-
 echo "REALM: $REALM"
 
 echo "LISTENING_PORT: $LISTENING_PORT"
@@ -73,7 +64,13 @@ add_config_line server-name $REALM
 add_config_line $USE_CREDENTIALS
 add_config_line mobility
 
-add_config_line userdb /var/lib/turn/turndb
+if [ $ANONYMOUS -eq 0 ]; then
+    add_config_line lt-cred-mech
+    add_config_line user $USERNAME:$PASSWORD
+else
+    add_config_line no-auth
+fi
+
 add_config_line cert /etc/ssl/turn_server_cert.pem
 add_config_line pkey /etc/ssl/turn_server_pkey.pem
 
@@ -85,11 +82,9 @@ add_config_line log-file stdout
 
 add_config_line fingerprint
 
-if [ $ANONYMOUS -eq 0 ]; then
-	turnadmin -a -u $USERNAME -p $PASSWORD -r $REALM
-fi
-
+echo
 cat "$CONFIG_FILE"
+echo
 
 echo "Starting TURN server..."
 
