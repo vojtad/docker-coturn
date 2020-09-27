@@ -61,7 +61,6 @@ add_config_line max-port $MAX_PORT
 
 add_config_line realm $REALM
 add_config_line server-name $REALM
-add_config_line $USE_CREDENTIALS
 add_config_line mobility
 
 if [ $ANONYMOUS -eq 0 ]; then
